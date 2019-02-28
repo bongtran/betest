@@ -3,68 +3,93 @@ package vn.bongtran.be.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CardModel {
-    @SerializedName("_id")
+    @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("guid")
+    @SerializedName("first_name")
     @Expose
-    private String guid;
-    @SerializedName("isActive")
+    private String first_name;
+    @SerializedName("last_name")
     @Expose
-    private boolean isActive;
-    @SerializedName("picture")
-    @Expose
-    private String picture;
-    @SerializedName("age")
-    @Expose
-    private int age;
-    @SerializedName("eyeColor")
-    @Expose
-    private String eyeColor;
-    @SerializedName("name")
-    @Expose
-    private String name;
-    @SerializedName("gender")
-    @Expose
-    private String gender;
-    @SerializedName("company")
-    @Expose
-    private String company;
+    private boolean last_name;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("phone")
+    @SerializedName("gender")
     @Expose
-    private String phone;
+    private int gender;
+    @SerializedName("mobile")
+    @Expose
+    private String mobile;
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("about")
+    @SerializedName("avatar")
     @Expose
-    private String about;
-    @SerializedName("registered")
-    @Expose
-    private String registered;
-    @SerializedName("latitude")
-    @Expose
-    private double latitude;
-    @SerializedName("longitude")
-    @Expose
-    private double longitude;
-    @SerializedName("greeting")
-    @Expose
-    private String greeting;
-    @SerializedName("favoriteFruit")
-    @Expose
-    private String favoriteFruit;
-    @SerializedName("tags")
-    @Expose
-    private ArrayList<String> tags = null;
-    @SerializedName("status")
-    @Expose
-    private ArrayList<FriendModel> friends = null;
+    private String avatar;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public boolean isLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(boolean last_name) {
+        this.last_name = last_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

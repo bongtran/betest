@@ -12,10 +12,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import vn.bongtran.be.model.ErrorModel;
 
-public class WebAPIManager<T> {
+class WebAPIManager<T> {
     String TAG = ">>>WebAPIManager";
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    public void doPostRequest(OkHttpClient client, int requestMethod, final String url, final String bodyParam, final RequestListener<Response> listener) {
+    void doPostRequest(OkHttpClient client, int requestMethod, final String url, final String bodyParam, final RequestListener<Response> listener) {
         RequestBody body = RequestBody.create(JSON, bodyParam);
 
         Request request = new Request.Builder()
@@ -33,7 +33,7 @@ public class WebAPIManager<T> {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 listener.onSuccess(response);
-                Log.d("TAG", response.body().string());
+//                Log.d("TAG", response.body().string());
             }
         });
     }

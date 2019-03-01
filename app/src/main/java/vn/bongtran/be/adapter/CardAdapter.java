@@ -1,32 +1,45 @@
 package vn.bongtran.be.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import butterknife.BindView;
+import vn.bongtran.be.R;
+import vn.bongtran.be.databinding.ItemCardViewBinding;
 import vn.bongtran.be.model.CardModel;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder> {
     private Context context;
-    private List<CardModel> cards;
-
-    public CardAdapter(Context context, List<CardModel> cards) {
+    private ArrayList<CardModel> cards;
+    private LayoutInflater layoutInflater;
+    public CardAdapter(Context context, ArrayList<CardModel> cards) {
         this.cards = cards;
         this.context = context;
     }
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+        if (layoutInflater == null) {
+            layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        }
+        ItemCardViewBinding binding =
+                DataBindingUtil.inflate(layoutInflater, R.layout.item_card_view, viewGroup, false);
+        return new CardViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder cardViewHolder, int i) {
-
+        cardViewHolder.binding.setCard(cards.get(i));
     }
 
     @Override
@@ -35,8 +48,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
     }
 
     class CardViewHolder extends RecyclerView.ViewHolder {
-        public CardViewHolder(@NonNull View itemView) {
-            super(itemView);
+        private final ItemCardViewBinding binding;
+
+        public CardViewHolder(final ItemCardViewBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.binding = itemBinding;
         }
     }
 }

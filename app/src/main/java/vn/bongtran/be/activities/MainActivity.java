@@ -1,17 +1,25 @@
 package vn.bongtran.be.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,20 +27,29 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import vn.bongtran.be.R;
 import vn.bongtran.be.adapter.CardAdapter;
+import vn.bongtran.be.interfaces.OnGetCardListCallBack;
 import vn.bongtran.be.model.CardModel;
+import vn.bongtran.be.model.ErrorModel;
+import vn.bongtran.be.network.HttpRequest;
 
 public class MainActivity extends AppCompatActivity {
     private final int PAGE_SIZE = 50;
     private boolean isLoading, isLastPage;
+    private int currentPage = 1;
     @BindView(R.id.searchView)
     SearchView searchView;
-    @BindView(R.id.rv)
-    RecyclerView recyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+    @BindView(R.id.pBar)
+    ProgressBar progressBar;
+    @BindView(R.id.txt_error)
+    TextView tvError;
     CardAdapter cardAdapter;
     LinearLayoutManager layoutManager;
     ArrayList<CardModel> cards;
+
+    //    @BindView(R.id.rv)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+        recyclerView = findViewById(R.id.rv);
 
+        cards = new ArrayList<CardModel>();
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         cardAdapter = new CardAdapter(this, cards);
@@ -51,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 // Pagination
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
+        loadItems();
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -65,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             int visibleItemCount = layoutManager.getChildCount();
             int totalItemCount = layoutManager.getItemCount();
             int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-
+            Log.d(">>>", "" + visibleItemCount + " " + totalItemCount + " " + firstVisibleItemPosition);
             if (!isLoading && !isLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
@@ -76,19 +96,90 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void loadMoreItems(){
+    private void loadItems() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setEnabled(false);
+        isLoading = true;
+        HttpRequest.getInstance().getCardListPaging(new OnGetCardListCallBack() {
+            @Override
+            public void onGetCardListSuccess(List<CardModel> cardModels) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setEnabled(false);
+                        isLoading = false;
+                        if (cardModels != null) {
+                            cards.addAll(cardModels);
+                            cardAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
 
+            }
+
+            @Override
+            public void onGetCardListFail(ErrorModel errorDto) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setEnabled(true);
+                        isLoading = false;
+                    }
+                });
+            }
+        }, currentPage);
+    }
+
+    private void loadMoreItems() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setEnabled(false);
+        currentPage++;
+        isLoading = true;
+        HttpRequest.getInstance().getCardListPaging(new OnGetCardListCallBack() {
+            @Override
+            public void onGetCardListSuccess(List<CardModel> cardModels) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setEnabled(false);
+                        isLoading = false;
+                        if (cardModels == null || cardModels.size() == 0) {
+                            isLastPage = true;
+                        } else {
+                            cards.addAll(cardModels);
+                            cardAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onGetCardListFail(ErrorModel errorDto) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        isLoading = false;
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setEnabled(false);
+                    }
+                });
+            }
+        }, currentPage);
     }
 
     @OnClick(R.id.fab)
-    public void addCard(){
+    public void addCard() {
 
     }
 
-    @OnItemSelected(R.id.rv)
-    void onItemSelected(int position) {
-        // TODO ...
-    }
+//    @OnItemSelected(R.id.rv)
+//    void onItemSelected(int position) {
+//        // TODO ...
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

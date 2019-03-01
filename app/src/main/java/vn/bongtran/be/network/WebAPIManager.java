@@ -2,6 +2,7 @@ package vn.bongtran.be.network;
 
 import android.util.Log;
 import java.io.IOException;
+import java.lang.annotation.Target;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,11 +39,10 @@ class WebAPIManager<T> {
         });
     }
 
-    void doGetRequest(OkHttpClient client, String url, final RequestListener<Response> listener){
+    void doGetRequest(OkHttpClient client, String url, final RequestListener<String> listener){
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
         client.newCall(request)
                 .enqueue(new Callback() {
                     @Override
@@ -52,8 +52,7 @@ class WebAPIManager<T> {
 
                     @Override
                     public void onResponse(Call call, final Response response) throws IOException {
-//                        String res = response.body().string();
-                        listener.onSuccess(response);
+                        listener.onSuccess(response.body().string());
                     }
                 });
     }

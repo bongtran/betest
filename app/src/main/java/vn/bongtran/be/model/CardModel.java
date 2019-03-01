@@ -1,39 +1,62 @@
 package vn.bongtran.be.model;
 
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+import androidx.databinding.BindingAdapter;
+import vn.bongtran.be.R;
+import vn.bongtran.be.network.PicassoTrustAll;
+
+import android.widget.ImageView;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CardModel {
+public class CardModel extends BaseObservable {
     @SerializedName("id")
     @Expose
-    private String id;
+    @Bindable
+    private int id;
     @SerializedName("first_name")
     @Expose
+    @Bindable
     private String first_name;
     @SerializedName("last_name")
     @Expose
-    private boolean last_name;
+    @Bindable
+    private String last_name;
     @SerializedName("email")
     @Expose
+    @Bindable
     private String email;
     @SerializedName("gender")
     @Expose
-    private int gender;
+    @Bindable
+    private String gender;
     @SerializedName("mobile")
     @Expose
+    @Bindable
     private String mobile;
     @SerializedName("address")
     @Expose
+    @Bindable
     private String address;
     @SerializedName("avatar")
     @Expose
+    @Bindable
     private String avatar;
-
-    public String getId() {
+    @BindingAdapter("avatar")
+    public static void loadImage(ImageView view, String imageUrl) {
+//        GlideApp.with(view.getContext())
+//                .load(imageUrl)
+//                .apply(RequestOptions.circleCropTransform())
+//                .into(view);
+        PicassoTrustAll.getInstance(view.getContext()).load(imageUrl).error(R.id.img_avatar).into(view);
+    }
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -45,11 +68,11 @@ public class CardModel {
         this.first_name = first_name;
     }
 
-    public boolean isLast_name() {
+    public String getLast_name() {
         return last_name;
     }
 
-    public void setLast_name(boolean last_name) {
+    public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
 
@@ -61,11 +84,11 @@ public class CardModel {
         this.email = email;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

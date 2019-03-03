@@ -13,35 +13,43 @@ import androidx.databinding.BindingAdapter;
 import vn.bongtran.be.R;
 import vn.bongtran.be.network.PicassoTrustAll;
 
-public class CardModel extends BaseObservable {
+public class CardLiteModel extends BaseObservable {
     @SerializedName("id")
     @Expose
     @Bindable
     private int id;
-    @SerializedName("first_name")
+    @SerializedName("name")
     @Expose
     @Bindable
-    private String first_name;
-    @SerializedName("last_name")
-    @Expose
-    @Bindable
-    private String last_name;
-    @SerializedName("email")
-    @Expose
-    @Bindable
-    private String email;
-    @SerializedName("gender")
-    @Expose
-    @Bindable
-    private String gender;
-    @SerializedName("mobile")
-    @Expose
-    @Bindable
-    private String mobile;
+    private String name;
     @SerializedName("address")
     @Expose
     @Bindable
     private String address;
+    @SerializedName("position")
+    @Expose
+    @Bindable
+    private String position;
+    @SerializedName("gender")
+    @Expose
+    @Bindable
+    private String gender;
+    @SerializedName("about")
+    @Expose
+    @Bindable
+    private String about;
+    @SerializedName("dob")
+    @Expose
+    @Bindable
+    private String dob;
+    @SerializedName("company")
+    @Expose
+    @Bindable
+    private String company;
+    @SerializedName("mobile")
+    @Expose
+    @Bindable
+    private String mobile;
     @SerializedName("avatar")
     @Expose
     @Bindable
@@ -73,44 +81,12 @@ public class CardModel extends BaseObservable {
         this.id = id;
     }
 
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public String getAddress() {
@@ -127,5 +103,53 @@ public class CardModel extends BaseObservable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

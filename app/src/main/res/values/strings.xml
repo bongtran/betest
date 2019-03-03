@@ -4,5 +4,22 @@
     <string name="txt_mobile">Mobile:</string>
     <string name="txt_address">Address:</string>
     <string name="txt_company">Company:</string>
-    <string name="txt_position">Postion:</string>
+    <string name="txt_position">Position:</string>
+    <string name="txt_gender">Gender:</string>
+    <string name="txt_dob">DOB:</string>
+    <string name="about">About:</string>
+    <string name="hint_bod">DOB</string>
+    <string name="hint_gender">Gender</string>
+    <string name="hint_about">About</string>
+    <string name="hint_position">Position (E.g. CEO CTO)</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_name">Name</string>
+    <string name="error_string_empty">Please fill this.</string>
+    <string name="txt_btn_save">Save</string>
+    <string name="title_new_card_visit">NEW CARD VISIT</string>
+    <string-array name="gender_arrays">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

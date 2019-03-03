@@ -3,40 +3,41 @@
 
     <data>
 
-        <import type="vn.bongtran.be.utils.BindingUtils" />
-
         <variable
             name="card"
-            type="vn.bongtran.be.model.CardModel" />
+            type="vn.bongtran.be.model.CardLiteModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_10"
+        android:layout_margin="@dimen/dimen_16"
         android:background="@drawable/bg_transparent_gray_border_round_corner"
+        android:gravity="top"
         android:orientation="horizontal"
-        android:padding="@dimen/dimen_10">
+        android:padding="@dimen/dimen_16">
 
         <ImageView
             android:id="@+id/img_avatar"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="top"
+            android:layout_marginTop="12dp"
             bind:avatar="@{card.avatar}"
             android:background="@color/transparent"
-            android:padding="@dimen/dimen_10"
             android:scaleType="centerInside"
             android:src="@drawable/ic_avatar" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{BindingUtils.getFullName(card.first_name, card.last_name)}"
+                android:text="@{card.name}"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -84,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="3dp"
-                    android:text="@{BindingUtils.getCardCompany(card.id)}" />
+                    android:text="@{card.company}" />
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="3dp"
-                    android:text="@{BindingUtils.getCardPosition()}" />
+                    android:text="@{card.position}" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

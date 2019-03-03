@@ -16,4 +16,10 @@ public class BindingUtils {
     public static String getCardCompany(int id){
         return getCardPosition();
     }
+
+    public static String getFormattedDate(String JsonDate){
+        String result = "";
+
+        return result;
+    }
 }

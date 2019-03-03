@@ -3,8 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="gray">#666666</color>
+    <color name="gray">#CCCCD9</color>
     <color name="transparent">#00000000</color>
-    <color name="white">#ffffff</color>3ecfaa
-    <color name="app_green">#3ecfaa</color>
+    <color name="white">#ffffff</color>
+    <color name="app_green">#33D0AA</color>
+    <color name="app_black">#000127</color>
+    <color name="gray_disable">#CCCCD9</color>
 </resources>

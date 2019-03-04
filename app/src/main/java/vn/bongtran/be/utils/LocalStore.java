@@ -14,7 +14,7 @@ import vn.bongtran.be.model.CardLiteModel;
 
 public class LocalStore {
     private static LocalStore instance;
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     private LocalStore() {
         pref = App.getAppContext().getSharedPreferences("MyPref", 0);

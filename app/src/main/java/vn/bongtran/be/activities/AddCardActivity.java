@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import vn.bongtran.be.R;
+import vn.bongtran.be.data.DataManager;
 import vn.bongtran.be.model.CardLiteModel;
 import vn.bongtran.be.ui.InteractiveScrollView;
 import vn.bongtran.be.utils.LocalStore;
@@ -142,6 +142,7 @@ public class AddCardActivity extends AppCompatActivity
             LocalStore.getInstance().saveCard(card);
             LocalStore.getInstance().putJustAddCard(true);
             LocalStore.getInstance().putLocalId(card.getId());
+            DataManager.sharedInstance().insertCard(card);
             finish();
         }
     }

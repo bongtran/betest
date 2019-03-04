@@ -2,6 +2,7 @@ package vn.bongtran.be.utils;
 
 public class Statics {
     public static final String TAG = ">>> Be Test";
+    public static final int DATABASE_VERSION = 1;
     public static final String CARD_EXTRA_NAME = "CARD";
     public static final String CARD_ID_LOCAL = "id_local";
     public static final String CARD_ADDED = "card_added";

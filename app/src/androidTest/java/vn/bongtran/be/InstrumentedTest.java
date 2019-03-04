@@ -6,17 +6,21 @@ import android.os.Bundle;
 
 import com.google.gson.Gson;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import vn.bongtran.be.activities.CardDetailActivity;
+import vn.bongtran.be.data.DataManager;
 import vn.bongtran.be.model.CardLiteModel;
 import vn.bongtran.be.utils.LocalStore;
 import vn.bongtran.be.utils.Statics;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -63,5 +67,10 @@ public class InstrumentedTest {
     @Test
     public void getCardsLocal_isCorrect() {
         assertNotNull(LocalStore.getInstance().getCardLites());
+    }
+
+    @Test
+    public void getCardsLocal() {
+        assertNotNull(DataManager.sharedInstance().getCards());
     }
 }

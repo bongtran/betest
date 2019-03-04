@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -39,6 +37,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import vn.bongtran.be.R;
 import vn.bongtran.be.adapter.CardAdapter;
+import vn.bongtran.be.data.DataManager;
 import vn.bongtran.be.interfaces.CardDetailRepo;
 import vn.bongtran.be.interfaces.CardRepo;
 import vn.bongtran.be.interfaces.OnGetCardListCallBack;
@@ -110,7 +109,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
     protected void onResume() {
         super.onResume();
         if(LocalStore.getInstance().justAddCard()){
-            CardLiteModel cardLiteModel = LocalStore.getInstance().getCardLite();
+            CardLiteModel cardLiteModel = DataManager.sharedInstance().getCard();
+
             searchView.setQuery("", false);
             cardLites.add(0, cardLiteModel);
             cardAdapter.addCard(0, cardLiteModel);
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
                         cardLites = CardBuilder.convertToCardLite(cardModelList, cardDetails);
                     }
 
-                    cardLitesLocal = LocalStore.getInstance().getCardLites();
+                    cardLitesLocal = DataManager.sharedInstance().getCards();
 
                     refresh();
                 } catch (Exception e) {

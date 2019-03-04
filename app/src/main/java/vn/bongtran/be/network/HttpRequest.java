@@ -36,7 +36,6 @@ public class HttpRequest {
         String url = Statics.URL_CARD_API;
 
         Map<String, String> params = new HashMap<>();
-        Log.d(">>> getCardList", new Gson().toJson(params));
         WebAPIManager webServiceManager = new WebAPIManager();
         webServiceManager.doGetRequest(client, url, new WebAPIManager.RequestListener<Response>() {
             @Override
@@ -71,11 +70,6 @@ public class HttpRequest {
                     Type listType = new TypeToken<ArrayList<CardModel>>() {
                     }.getType();
 
-
-//                    String responseString = response.body().toString();
-//                    responseString = responseString.substring(1);
-//                    responseString = responseString.substring(0, responseString.length() - 2);
-//                    Log.d(TAG, responseString);
                     cardModelList = new Gson().fromJson(response, listType);
                     onGetCardListCallBack.onGetCardListSuccess(cardModelList);
                 } catch (Exception e) {

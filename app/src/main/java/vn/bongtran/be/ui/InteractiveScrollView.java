@@ -26,8 +26,11 @@ public class InteractiveScrollView extends ScrollView {
         View view = (View) getChildAt(getChildCount()-1);
         int diff = (view.getBottom()-(getHeight()+getScrollY()));
 
-        if (diff == 0 && mListener != null) {
-            mListener.onBottomReached();
+        if(mListener != null)
+        if (diff == 0 ) {
+            mListener.onBottomReached(true);
+        }else {
+            mListener.onBottomReached(false);
         }
 
         super.onScrollChanged(l, t, oldl, oldt);
@@ -50,6 +53,6 @@ public class InteractiveScrollView extends ScrollView {
      * Event listener.
      */
     public interface OnBottomReachedListener{
-        public void onBottomReached();
+        public void onBottomReached(boolean reached);
     }
 }

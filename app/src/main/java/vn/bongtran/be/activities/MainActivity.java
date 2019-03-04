@@ -2,8 +2,11 @@ package vn.bongtran.be.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -50,7 +53,7 @@ import vn.bongtran.be.utils.CardBuilder;
 import vn.bongtran.be.utils.LocalStore;
 import vn.bongtran.be.utils.Statics;
 
-public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener {
+public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener, SearchView.OnQueryTextListener {
     private final int PAGE_SIZE = 50;
     private boolean isLoading, isLastPage;
     private int currentPage = 1;
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
     TextView tvError;
     CardAdapter cardAdapter;
     LinearLayoutManager layoutManager;
-    ArrayList<CardModel> cards;
+//    ArrayList<CardModel> cards;
     ArrayList<CardDetailModel> cardDetails;
     ArrayList<CardLiteModel> cardLites;
     ArrayList<CardLiteModel> cardLitesLocal;
@@ -80,9 +83,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+        int id = searchView.getContext()
+                .getResources()
+                .getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = searchView.findViewById(id);
+        textView.setTextColor(getResources().getColor(R.color.app_black));
+        searchView.setQueryHint(Html.fromHtml("<font color = #CCCCD9>" +
+                getResources().getString(R.string.txt_search) + "</font>"));
+        searchView.setOnQueryTextListener(this);
         recyclerView = findViewById(R.id.rv);
 
-        cards = new ArrayList<>();
         cardDetails = new ArrayList<>();
         cardLites = new ArrayList<>();
         cardLitesLocal = new ArrayList<>();
@@ -93,8 +103,20 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         recyclerView.setAdapter(cardAdapter);
 
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener);
-//        loadItems();
         getCards();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(LocalStore.getInstance().justAddCard()){
+            CardLiteModel cardLiteModel = LocalStore.getInstance().getCardLite();
+            searchView.setQuery("", false);
+            cardLites.add(0, cardLiteModel);
+            cardAdapter.addCard(0, cardLiteModel);
+            LocalStore.getInstance().putJustAddCard(false);
+        }
+        searchView.clearFocus();
     }
 
     private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -109,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
             int visibleItemCount = layoutManager.getChildCount();
             int totalItemCount = layoutManager.getItemCount();
             int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-            Log.d(">>>", "" + visibleItemCount + " " + totalItemCount + " " + firstVisibleItemPosition);
+//            Log.d(">>>", "" + visibleItemCount + " " + totalItemCount + " " + firstVisibleItemPosition);
             if (!isLoading && !isLastPage) {
                 if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
@@ -134,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
                         recyclerView.setEnabled(false);
                         isLoading = false;
                         if (cardModels != null) {
-                            cards.addAll(cardModels);
                             cardAdapter.notifyDataSetChanged();
                         }
                     }
@@ -172,10 +193,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
                         if (cardModels == null || cardModels.size() == 0) {
                             isLastPage = true;
                         } else {
-                            cards.addAll(cardModels);
                             ArrayList<CardLiteModel> newCards = CardBuilder.convertToCardLite(cardModels, cardDetails);
-                            cardLites.addAll(newCards);
-                            cardAdapter.notifyDataSetChanged();
+
+                            cardAdapter.addCards(newCards);
                         }
                     }
                 });
@@ -253,21 +273,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         Observable.zip(cardObservable, cardDetailObservable, new BiFunction<JsonArray, JsonArray, CardResult>() {
             @Override
             public CardResult apply(JsonArray jsonElements, JsonArray jsonElements2) throws Exception {
-//                Log.d(">>>>", "apply 1 " + jsonElements.getAsString());
-//                Log.d(">>>>", "apply 2 " + jsonElements2.getAsString());
                 return new CardResult(jsonElements, jsonElements2);
             }
 
         }).subscribe(new Observer<CardResult>() {
             @Override
             public void onSubscribe(Disposable d) {
-
             }
 
             @Override
             public void onNext(CardResult cardResult) {
                 ArrayList<CardModel> cardModelList = new ArrayList<>();
-                ArrayList<CardDetailModel> cardDetailModelList = new ArrayList<>();
+                cardDetails = new ArrayList<>();
                 try {
                     Type listType = new TypeToken<ArrayList<CardModel>>() {
                     }.getType();
@@ -277,32 +294,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
                     listType = new TypeToken<List<CardDetailModel>>() {
                     }.getType();
-                    cardDetailModelList = new Gson().fromJson(cardResult.cardDetails, listType);
-                    if (cardModelList != null && cardModelList.size() > 0 && cardDetailModelList != null && cardDetailModelList.size() > 0) {
-                        cardLites = CardBuilder.convertToCardLite(cardModelList, cardDetailModelList);
+                    cardDetails = new Gson().fromJson(cardResult.cardDetails, listType);
+                    if (cardModelList != null && cardModelList.size() > 0 && cardDetails != null && cardDetails.size() > 0) {
+                        cardLites = CardBuilder.convertToCardLite(cardModelList, cardDetails);
                     }
-
 
                     cardLitesLocal = LocalStore.getInstance().getCardLites();
 
                     refresh();
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            progressBar.setVisibility(View.GONE);
-//                            recyclerView.setEnabled(false);
-//                            isLoading = false;
-//                            if (cardLites != null) {
-//                                for (CardLiteModel c : cardLitesLocal) {
-//                                    cardLites.add(0, c);
-//                                }
-//                                cardAdapter.notifyDataSetChanged();
-//                                Log.d(">>>>", " cardLites" + cardLites.size());
-//                            }
-//                        }
-//                    });
                 } catch (Exception e) {
-                    Log.d(">>>>", "cardLites Exception " + e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -316,12 +316,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
             @Override
             public void onError(Throwable e) {
-
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setEnabled(false);
+                isLoading = false;
             }
 
             @Override
             public void onComplete() {
-
             }
         });
     }
@@ -330,13 +331,23 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         progressBar.setVisibility(View.GONE);
         recyclerView.setEnabled(false);
         isLoading = false;
-//        if (cardLites != null) {
-//            for (CardLiteModel c : cardLitesLocal) {
-//                cardLites.add(0, c);
-//            }
-//            cardAdapter.notifyDataSetChanged();
-//            Log.d(">>>>", " cardLites" + cardLites.size());
-//        }
-        cardAdapter.setCards(cardLites);
+        if (cardLites != null) {
+            for (CardLiteModel c : cardLitesLocal) {
+                cardLites.add(0, c);
+            }
+        }
+        cardAdapter.addCards(cardLites);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        cardAdapter.getFilter().filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        cardAdapter.getFilter().filter(newText);
+        return false;
     }
 }

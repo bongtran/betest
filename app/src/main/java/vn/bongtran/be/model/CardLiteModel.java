@@ -61,9 +61,6 @@ public class CardLiteModel extends BaseObservable {
 //                .apply(RequestOptions.circleCropTransform())
 //                .into(view);
         Transformation transformation = new RoundedTransformationBuilder()
-//                .borderColor(Color.BLACK)
-//                .borderWidthDp(3)
-//                .cornerRadiusDp(30)
                 .oval(true)
                 .build();
         PicassoTrustAll.getInstance(view.getContext())

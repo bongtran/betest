@@ -3,10 +3,10 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/app_green</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/app_green</item>
-        <item name="actionBarSize">76dp</item>
+        <item name="actionBarSize">66dp</item>
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetEnd">0dp</item>
         <item name="android:logo">@android:color/transparent</item>
@@ -15,6 +15,7 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -22,7 +23,10 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="AppThemeActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="AppThemeActionBar" parent="@android:style/Widget.Holo.Light.ActionBar"/>
 
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/app_black</item>
+        <item name="android:textColorHint">@color/gray</item>
     </style>
 </resources>

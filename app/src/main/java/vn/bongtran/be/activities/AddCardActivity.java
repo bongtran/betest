@@ -25,6 +25,8 @@ import vn.bongtran.be.R;
 import vn.bongtran.be.model.CardLiteModel;
 import vn.bongtran.be.ui.InteractiveScrollView;
 import vn.bongtran.be.utils.LocalStore;
+import vn.bongtran.be.utils.Utils;
+import vn.bongtran.be.utils.Validator;
 
 public class AddCardActivity extends AppCompatActivity
         implements InteractiveScrollView.OnBottomReachedListener, TextWatcher,
@@ -59,6 +61,7 @@ public class AddCardActivity extends AppCompatActivity
         edtName.addTextChangedListener(this);
         edtAddress.addTextChangedListener(this);
         edtPosition.addTextChangedListener(this);
+        edtDob.addTextChangedListener(this);
         spinnerGender.setOnItemSelectedListener(this);
     }
 
@@ -82,9 +85,20 @@ public class AddCardActivity extends AppCompatActivity
         addCard();
     }
 
-    @Override
-    public void onBottomReached() {
+    @OnClick(R.id.img_avatar_new)
+    void avatarClicked(){
+        chooseAvatar();
+    }
 
+    @Override
+    public void onBottomReached(boolean reached) {
+        if(reached){
+            btnAdd.setVisibility(View.INVISIBLE);
+            btnSave.setVisibility(View.VISIBLE);
+        }else {
+            btnAdd.setVisibility(View.VISIBLE);
+            btnSave.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void pickDate() {
@@ -115,26 +129,32 @@ public class AddCardActivity extends AppCompatActivity
     private void addCard() {
         if (validateField()) {
             CardLiteModel card = new CardLiteModel();
+            card.setId(LocalStore.getInstance().getLocalId());
             card.setAbout(edtAbout.getText().toString());
             card.setAddress(edtAddress.getText().toString());
-//            card.setAvatar(edtAbout.getText().toString());
+            card.setAvatar("https://robohash.org/quirepellatsunt.png?size=200x200&set=set1");
             card.setDob(edtDob.getText().toString());
             card.setGender(spinnerGender.getSelectedItem().toString());
             card.setName(edtName.getText().toString());
             card.setPosition(edtPosition.getText().toString());
             card.setCompany("Be");
+            card.setMobile(Utils.generatePhoneNumber());
             LocalStore.getInstance().saveCard(card);
             LocalStore.getInstance().putJustAddCard(true);
-
+            LocalStore.getInstance().putLocalId(card.getId());
             finish();
         }
     }
 
     private void validateInput() {
         boolean validate = validateField();
-        Log.d(">>> ", "validateInput " + validate);
         btnSave.setEnabled(validate);
-        btnAdd.setVisibility(validate ? View.VISIBLE : View.INVISIBLE);
+        btnAdd.setEnabled(validate);
+        if(validate){
+            btnAdd.setTextColor(getResources().getColor(R.color.app_green));
+        }else {
+            btnAdd.setTextColor(getResources().getColor(R.color.gray));
+        }
     }
 
 
@@ -148,6 +168,9 @@ public class AddCardActivity extends AppCompatActivity
         if (edtPosition.getText().toString().isEmpty()) {
             return false;
         }
+
+        if(!edtDob.getText().toString().isEmpty() && !Validator.isValidBirthday(edtDob.getText().toString()))
+            return false;
 
         return spinnerGender.getSelectedItemPosition() > 0;
     }
@@ -176,6 +199,10 @@ public class AddCardActivity extends AppCompatActivity
         }
 
         return true;
+    }
+
+    private void chooseAvatar(){
+
     }
 
     @Override

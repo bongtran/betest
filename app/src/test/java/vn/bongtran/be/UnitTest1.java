@@ -1,5 +1,6 @@
 package vn.bongtran.be;
 
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,14 +10,14 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class UnitTest1 {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void generateMobile_isCorrect() {
+        assertEquals(11, vn.bongtran.be.utils.Utils.generatePhoneNumber().length());
     }
 
     @Test
-    public void getCardAPITest() {
-
+    public void generatePosition_isCorrect() {
+        assertTrue(vn.bongtran.be.utils.BindingUtils.getCardPosition().length() > 0);
     }
 }

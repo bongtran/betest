@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".activities.AddCardActivity">
 
@@ -52,85 +53,99 @@
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_marginTop="24dp"
+                android:padding="@dimen/dimen_10"
                 android:background="@drawable/bg_transparent_gray_border_round_corner"
-                android:hint="@string/hint_name"
-                android:padding="@dimen/dimen_10" />
+                android:hint="@string/hint_name"/>
 
             <EditText
                 android:id="@+id/edt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:padding="@dimen/dimen_10"
                 android:background="@drawable/bg_transparent_gray_border_round_corner"
-                android:hint="@string/hint_address"
-                android:padding="@dimen/dimen_10" />
+                android:hint="@string/hint_address"/>
 
             <EditText
                 android:id="@+id/edt_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:padding="@dimen/dimen_10"
                 android:background="@drawable/bg_transparent_gray_border_round_corner"
-                android:hint="@string/hint_position"
-                android:padding="@dimen/dimen_10" />
+                android:hint="@string/hint_position" />
 
             <EditText
                 android:id="@+id/edt_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_16"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:padding="@dimen/dimen_10"
                 android:background="@drawable/bg_transparent_gray_border_round_corner"
-                android:hint="@string/hint_about"
-                android:padding="@dimen/dimen_10" />
+                android:hint="@string/hint_about"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16">
 
                 <Spinner
                     android:id="@+id/spinner_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_10"
                     android:background="@drawable/bg_transparent_gray_border_round_corner"
                     android:entries="@array/gender_arrays"
                     android:hint="@string/hint_gender"
-                    android:padding="@dimen/dimen_10"
                     android:prompt="@string/hint_gender" />
+
                 <ImageButton
                     android:id="@+id/btn_gender"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="8dp"
+                    android:layout_height="6dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="26dp"
-                    android:background="@color/white"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/transparent"
                     android:scaleType="fitXY"
                     android:src="@drawable/icon_arrow_down" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_16"
+                android:layout_marginRight="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_16">
 
                 <EditText
                     android:id="@+id/edt_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_10"
+                    android:inputType="date"
                     android:background="@drawable/bg_transparent_gray_border_round_corner"
-                    android:hint="@string/hint_bod"
-                    android:padding="@dimen/dimen_10" />
+                    android:hint="@string/hint_bod"/>
 
                 <ImageButton
                     android:id="@+id/btn_dob"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="26dp"
-                    android:background="@color/white"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/transparent"
                     android:scaleType="fitXY"
                     android:src="@drawable/icon_calendar" />
             </RelativeLayout>
@@ -140,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dimen_16"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_marginTop="40dp"
                 android:layout_marginRight="@dimen/dimen_16"
                 android:layout_marginBottom="@dimen/dimen_16"
                 android:background="@drawable/bg_button"

@@ -34,7 +34,6 @@ class WebAPIManager<T> {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 listener.onSuccess(response);
-//                Log.d("TAG", response.body().string());
             }
         });
     }

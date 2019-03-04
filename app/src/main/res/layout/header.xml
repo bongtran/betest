@@ -32,6 +32,6 @@
         android:layout_centerVertical="true"
         android:background="@color/transparent"
         android:text="@string/txt_btn_save"
-        android:textColor="@color/app_green"
-        android:visibility="invisible" />
+        android:textColor="@color/gray"
+        android:visibility="visible" />
 </RelativeLayout>

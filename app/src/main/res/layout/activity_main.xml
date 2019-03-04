@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activities.MainActivity">
 
     <LinearLayout
@@ -24,16 +25,18 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/dimen_16"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <SearchView
                     android:id="@+id/searchView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/bg_transparent_gray_border_round_corner"
                     android:iconifiedByDefault="false"
-                    android:queryHint="Search"
+                    android:queryHint="@string/txt_search"
                     android:searchIcon="@android:drawable/ic_search_category_default" />
             </androidx.appcompat.widget.Toolbar>
 

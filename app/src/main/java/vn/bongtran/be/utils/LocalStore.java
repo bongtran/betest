@@ -27,6 +27,25 @@ public class LocalStore {
         return instance;
     }
 
+    public CardLiteModel getCardLite() {
+       CardLiteModel result = null;
+        try {
+            String m = getStringValue(Statics.CARD_EXTRA_NAME);
+            if (!m.isEmpty()) {
+                Type listType = new TypeToken<List<CardLiteModel>>() {
+                }.getType();
+                ArrayList<CardLiteModel> arrayList = new Gson().fromJson(m, listType);
+                if(arrayList != null && arrayList.size() > 0){
+                    result = arrayList.get(arrayList.size() -1);
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+        return result;
+    }
+
     public ArrayList<CardLiteModel> getCardLites() {
         ArrayList<CardLiteModel> result = new ArrayList<CardLiteModel>();
         try {
@@ -45,7 +64,7 @@ public class LocalStore {
 
     public void saveCard(CardLiteModel card) {
         ArrayList<CardLiteModel> cards = getCardLites();
-        cards.add(0, card);
+        cards.add(card);
 
         putString(Statics.CARD_EXTRA_NAME, new Gson().toJson(cards));
     }
@@ -55,7 +74,7 @@ public class LocalStore {
         if(result == 0)
             result = 10151;
 
-        return result;
+        return result + 1;
     }
 
     public void putLocalId(int id){
